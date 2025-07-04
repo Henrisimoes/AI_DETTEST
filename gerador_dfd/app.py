@@ -1,6 +1,13 @@
 import streamlit as st
 from gerar_dfd import gerar_dfd_completo
 from datetime import datetime
+import locale
+
+locale.setlocale(locale.LC_ALL, 'C')
+
+locale.setlocale(locale.LC_TIME, '')        # datetime.now().strftime("Cuiabá-MT, %d de %B de %Y") = 'Cuiabá-MT, 04 de julho de 2025'
+locale.setlocale(locale.LC_CTYPE, '')       # Caracteres especiais
+locale.setlocale(locale.LC_MONETARY, '')    # locale.currency(1200, grouping=True) = 'R$ 1.200,00'
 
 # ========== ESTILO VISUAL ==========
 st.markdown("""
