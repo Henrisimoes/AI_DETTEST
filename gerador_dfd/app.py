@@ -1,10 +1,12 @@
 import streamlit as st
 from gerar_dfd import gerar_dfd_completo
 from datetime import datetime
+from PIL import Image
+import os
 import locale
 
+# ======== set locale e valores em PT BR ===========
 locale.setlocale(locale.LC_ALL, 'C')
-
 locale.setlocale(locale.LC_TIME, '')        # datetime.now().strftime("Cuiabá-MT, %d de %B de %Y") = 'Cuiabá-MT, 04 de julho de 2025'
 locale.setlocale(locale.LC_CTYPE, '')       # Caracteres especiais
 locale.setlocale(locale.LC_MONETARY, '')    # locale.currency(1200, grouping=True) = 'R$ 1.200,00'
@@ -12,33 +14,52 @@ locale.setlocale(locale.LC_MONETARY, '')    # locale.currency(1200, grouping=Tru
 # ========== ESTILO VISUAL ==========
 st.markdown("""
     <style>
-        body {
+        body, .stApp {
             background-color: #0a2540;
         }
-        .stApp {
-            background-color: #0a2540;
-        }
-        .title {
-            color: white;
-            font-size: 28px;
-            font-weight: bold;
-            padding: 20px 10px 10px 10px;
+
+        .title-container {
             display: flex;
             align-items: center;
             gap: 15px;
+            padding: 10px 10px 20px 10px;
         }
-        .title img {
-            height: 55px;
+        .title-text {
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
         }
+
+        /* Fundo branco para o formulário */
+        div[data-testid="stForm"] {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0,0,0,0);
+        }
+
+        /* Inputs */
+        input, textarea, select {
+            background-color: white !important;
+            color: black !important;
+            border: 1px solid #ccc !important;
+        }
+
+        /* Corrigir padding geral */
         .st-emotion-cache-1r4qj8v {
             padding: 0rem 2rem;
         }
     </style>
-    <div class="title">
-        <img src="gerador_dfd\static\logo_detran.png" alt="logo">
-        <span>Gerador de Documento de Formalização da Demanda - DETRAN-MT</span>
-    </div>
 """, unsafe_allow_html=True)
+
+# ========== TÍTULO COM LOGO ==========
+logo_path = os.path.join("static", "logo_detran.png")
+logo = Image.open(logo_path)
+
+st.markdown('<div class="title-container">', unsafe_allow_html=True)
+st.image(logo, width=60)
+st.markdown('<div class="title-text">Gerador de Documento de Formalização da Demanda - DETRAN-MT</div>', unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
 
 # ========== FORMULÁRIO ==========
 with st.form("dfd_form"):
@@ -89,8 +110,6 @@ if gerar:
             "finalidade": finalidade,
             "tipo_objeto": map_tipo[tipo_objeto],
             "forma_contratacao": map_forma[forma_contratacao],
-
-            # Campos fixos institucionais
             "orgao": "DEPARTAMENTO ESTADUAL DE TRÂNSITO DE MATO GROSSO – DETRAN-MT",
             "unidade_orcamentaria": "19301",
             "setor": "COORDENADORIA DE TECNOLOGIA DA INFORMAÇÃO",
@@ -113,7 +132,6 @@ if gerar:
 
         caminho_arquivo = gerar_dfd_completo(dados, lista_itens)
 
-    # Download
     with open(caminho_arquivo, "rb") as f:
         st.success("✅ Documento gerado com sucesso!")
         st.download_button("📥 Baixar Documento", f, file_name=caminho_arquivo.split("/")[-1])
