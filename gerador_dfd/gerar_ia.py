@@ -40,6 +40,21 @@ def gerar_texto_ia(dados, tipo):
             f"Relacione o item a metas institucionais, melhoria de processos "
             f"ou eficiência administrativa. Use linguagem técnica, impessoal e sucinta."
         )
+        
+    elif tipo == "estudo_tecnico":
+        prompt = (
+            f"Com base no item '{dados['item']}' e na finalidade '{dados['finalidade']}', "
+            f"indique se é necessária a elaboração do Estudo Técnico Preliminar (ETP) e análise de riscos "
+            f"segundo a Lei 14.133/21. Responda apenas SIM ou NÃO. "
+            f"Se for NÃO, forneça também uma justificativa curta e objetiva."
+        )
+
+    elif tipo == "plano_contratacao":
+        prompt = (
+            f"Com base no item '{dados['item']}' e na finalidade '{dados['finalidade']}', "
+            f"indique se os objetos a serem adquiridos/contratados estão previstos no Plano de Contratações Anual (PCA). "
+            f"Responda apenas SIM ou NÃO. Se for NÃO, justifique de forma breve."
+        )
 
     elif tipo == "equipe":
         return "NÃO SE APLICA."
