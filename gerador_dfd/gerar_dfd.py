@@ -1,14 +1,21 @@
-# gerar_dfd.py
 from docxtpl import DocxTemplate
 from datetime import datetime
 from gerar_ia import gerar_texto_ia
 
 def gerar_opcoes_marcadas(opcao_escolhida, opcoes_dict):
     linhas = []
+    # Define largura fixa do "(X)" + label
+    # Vamos alinhar pela maior label
+    max_label_len = max(len(label) for label in opcoes_dict)
+
     for label, chave in opcoes_dict.items():
         marcado = "(X)" if chave == opcao_escolhida else "( )"
-        linhas.append(f"{marcado} {label}")
+        # Espaçamento: label alinha à direita com padding
+        linha = f"{marcado} {label.ljust(max_label_len)}"
+        linhas.append(linha)
+
     return "\n".join(linhas)
+
 
 def gerar_dfd_completo(dados_formulario, lista_itens):
     doc = DocxTemplate("templates/modelo_dfd.docx")
@@ -19,6 +26,25 @@ def gerar_dfd_completo(dados_formulario, lista_itens):
     dados_formulario["objetivo"] = gerar_texto_ia(dados_formulario, "objetivo")
     dados_formulario["planejamento"] = gerar_texto_ia(dados_formulario, "planejamento")
     dados_formulario["equipe"] = gerar_texto_ia(dados_formulario, "equipe")
+
+    # IA para os novos campos SIM/NÃO + Justificativa
+    etp_resultado = gerar_texto_ia(dados_formulario, "estudo_tecnico")
+    plano_resultado = gerar_texto_ia(dados_formulario, "plano_contratacao")
+
+    # Tratamento para marcações dos novos campos
+    if etp_resultado.strip().upper().startswith("SIM"):
+        dados_formulario["estudo_tecnico"] = "(X) SIM\n( ) NÃO"
+        dados_formulario["justificativa_etp"] = ""
+    else:
+        dados_formulario["estudo_tecnico"] = "( ) SIM\n(X) NÃO"
+        dados_formulario["justificativa_etp"] = etp_resultado
+
+    if plano_resultado.strip().upper().startswith("SIM"):
+        dados_formulario["plano_contratacao"] = "(X) SIM\n( ) NÃO"
+        dados_formulario["justificativa_pca"] = ""
+    else:
+        dados_formulario["plano_contratacao"] = "( ) SIM\n(X) NÃO"
+        dados_formulario["justificativa_pca"] = plano_resultado
 
     # Marcações dinâmicas nos tópicos 1 e 3
     opcoes_objeto = {
