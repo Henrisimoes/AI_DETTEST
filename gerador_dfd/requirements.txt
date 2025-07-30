@@ -1,2 +1,0 @@
-docxtpl>=0.20.0
-streamlit>=1.46.1
