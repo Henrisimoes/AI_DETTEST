@@ -1,0 +1,180 @@
+/* Estilo geral */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #003B5C; /* Azul petróleo */
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    flex-direction: column; /* Permite empilhar os elementos */
+}
+
+/* Estilo para o header-container */
+.header-container {
+    width: 100%;
+    background-color: #0a2540; /* Azul escuro */
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 20px;
+    border-radius: 0 0 20px 20px;
+    margin-bottom: 30px;
+}
+
+/* Logo */
+.logo img {
+    max-width: 100px; /* Ajuste o tamanho da logo conforme necessário */
+}
+
+/* Texto no header */
+.header-text {
+    color: white;
+    text-align: center;
+}
+
+.header-text h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.header-text p {
+    font-size: 16px;
+}
+
+/* Estilo do container principal */
+.container {
+    width: 100%;
+    max-width: 800px;
+    padding: 30px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+header {
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 36px;
+    font-weight: 600;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+footer {
+    margin-top: 30px;
+    font-size: 14px;
+    color: #ccc;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    .gerar-btn {
+        padding: 12px 30px;
+        font-size: 16px;
+    }
+}
+
+/* ========================================================= */
+/* ESTILOS PARA A NOVA INTERFACE DE CHATBOT (INTEGRADOS) */
+/* ========================================================= */
+
+/* Estilos para o balão de fala do chatbot */
+.chat-message-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.robot-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.robot-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.speech-bubble {
+    position: relative;
+    background-color: #1D3557; 
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: left;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    margin-left: 20px;
+}
+
+.speech-bubble::before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 20px;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 10px solid #1D3557;
+}
+
+.speech-bubble p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Estilos para a grade de botões */
+.button-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+    max-height: 250px; /* Define uma altura máxima para a rolagem */
+    overflow-y: auto; /* Adiciona a barra de rolagem vertical */
+    padding-right: 10px; /* Espaço para a barra de rolagem */
+}
+
+.doc-btn {
+    background-color: #1D3557;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    width: 100%; /* Faz os botões ocuparem 100% da largura do contêiner */
+}
+
+.doc-btn:hover {
+    background-color: #457B9D;
+}
