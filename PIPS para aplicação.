@@ -1,0 +1,6 @@
+pip install flask
+pip install flask_cors
+pip install selenium
+pip install locale
+pip install streamlit
+pip install beautifulSoup
